@@ -11,25 +11,17 @@ def load_data(filepath):
 
 
 def get_biggest_bar(json_content):
-    max_seats = 0
-    bar_name = ''
+    bars_dict = {}
     for bar in json_content["features"]:
-        seats_сount = bar["properties"]["Attributes"]["SeatsCount"]
-        if seats_сount > max_seats:
-            max_seats = seats_сount
-            bar_name = bar["properties"]["Attributes"]["Name"]
-    return bar_name
+        bars_dict[bar["properties"]["Attributes"]["SeatsCount"]] = bar["properties"]["Attributes"]["Name"]
+    return bars_dict[max(bars_dict.keys())]
 
 
 def get_smallest_bar(json_content):
-    min_seats = 1000000000
-    bar_name = ''
+    bars_dict = {}
     for bar in json_content["features"]:
-        seats_сount = bar["properties"]["Attributes"]["SeatsCount"]
-        if seats_сount < min_seats:
-            min_seats = seats_сount
-            bar_name = bar["properties"]["Attributes"]["Name"]
-    return bar_name
+        bars_dict[bar["properties"]["Attributes"]["SeatsCount"]] = bar["properties"]["Attributes"]["Name"]
+    return bars_dict[min(bars_dict.keys())]
 
 
 def get_closest_bar(json_content, longitude, latitude):
