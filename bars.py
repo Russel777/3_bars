@@ -46,7 +46,7 @@ def get_closest_bar(data, longitude, latitude):
 
 if __name__ == '__main__':
     data = load_data('bars.json')
-    print(get_biggest_bar(data))
-    print(get_smallest_bar(data))
+    print('Biggest bar is {}'.format(get_biggest_bar(data)))
+    print('Smallest bar is {}'.format(get_smallest_bar(data)))
     if len(sys.argv) > 1:
-        print(get_closest_bar(data, float(sys.argv[1]), float(sys.argv[2])))
+        print('Closest bar is {}'.format(get_closest_bar(data, float(sys.argv[1]), float(sys.argv[2]))))
