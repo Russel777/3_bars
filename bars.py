@@ -28,8 +28,7 @@ def get_closest_bar(bars, longitude, latitude):
             bar_name = bar["properties"]["Attributes"]["Name"]
     return bar_name
 
-
-if __name__ == '__main__':
+def arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--path", help="path to the file")
     parser.add_argument("--biggest", help="display a biggest bar in file list", action="store_true")
@@ -59,3 +58,6 @@ if __name__ == '__main__':
             print('Not enough parameters')
     else:
         print("Enter path")
+
+if __name__ == '__main__':
+    arguments()
