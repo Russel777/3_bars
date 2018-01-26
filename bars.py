@@ -10,11 +10,17 @@ def load_data(filepath):
 
 
 def get_biggest_bar(bars):
-    return max(bars, key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"])
+    return max(
+        bars,
+        key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"],
+    )
 
 
 def get_smallest_bar(bars):
-    return min(bars, key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"])
+    return min(
+        bars,
+        key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"],
+    )
 
 
 def get_closest_bar(bars, longitude, latitude):
@@ -27,33 +33,57 @@ def get_closest_bar(bars, longitude, latitude):
 
 def add_argv():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--path", help="path to the file", required=True)
-    parser.add_argument("--biggest", help="display a biggest bar in file list", action="store_true")
-    parser.add_argument("--smallest", help="display a smallest bar in file list", action="store_true")
-    parser.add_argument("-x",
+    parser.add_argument(
+        "-p",
+        "--path",
+        help="path to the file",
+        required=True,
+    )
+    parser.add_argument(
+        "--biggest",
+        help="display a biggest bar in file list",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--smallest",
+        help="display a smallest bar in file list",
+        action="store_true",
+    )
+    parser.add_argument(
+                        "-x",
                         "--longtitude",
-                        help="input longitude and latitude for display a closest bar in file list ",
-                        type=float)
-    parser.add_argument("-y",
+                        help="input longitude and latitude for display a "
+                             "closest bar in file list ",
+                        type=float,
+    )
+    parser.add_argument(
+                        "-y",
                         "--latitude",
-                        help="input longitude and latitude for display a closest bar in file list ",
-                        type=float)
+                        help="input longitude and latitude for display a "
+                             "closest bar in file list ",
+                        type=float,
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = add_argv()
-    json_content = load_data(args.path)["features"]
+    bars = load_data(args.path)["features"]
     if args.biggest:
         print("Biggest bar is {}".format(
-            get_biggest_bar(json_content)["properties"]["Attributes"]["Name"])
+            get_biggest_bar(bars)["properties"]["Attributes"]["Name"])
         )
     if args.smallest:
         print("Smallest bar is {}".format(
-            get_smallest_bar(json_content)["properties"]["Attributes"]["Name"])
+            get_smallest_bar(bars)["properties"]["Attributes"]["Name"])
         )
     if args.longtitude and args.latitude:
         print("Closest bar is {}".format(
-            get_closest_bar(json_content, args.longtitude, args.latitude)["properties"]["Attributes"]["Name"]))
+            get_closest_bar(
+                bars,
+                args.longtitude,
+                args.latitude)["properties"]["Attributes"]["Name"],
+            )
+        )
     elif args.longtitude or args.latitude:
         print("Not enough parameters")
