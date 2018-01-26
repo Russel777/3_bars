@@ -44,17 +44,17 @@ def arguments():
                         type=float)
     args = parser.parse_args()
 
-    json_content = load_data(args.path)
+    json_content = load_data(args.path)["features"]
     if args.biggest:
         print('Biggest bar is {}'.format(
-            get_biggest_bar(json_content["features"])["properties"]["Attributes"]["Name"])
+            get_biggest_bar(json_content)["properties"]["Attributes"]["Name"])
         )
     if args.smallest:
         print('Smallest bar is {}'.format(
-            get_smallest_bar(json_content["features"])["properties"]["Attributes"]["Name"])
+            get_smallest_bar(json_content)["properties"]["Attributes"]["Name"])
         )
     if args.longtitude and args.latitude:
-        print('Closest bar is {}'.format(get_closest_bar(json_content["features"], args.longtitude, args.latitude)))
+        print('Closest bar is {}'.format(get_closest_bar(json_content, args.longtitude, args.latitude)))
     elif args.longtitude or args.latitude:
         print('Not enough parameters')
 
