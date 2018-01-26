@@ -18,15 +18,11 @@ def get_smallest_bar(bars):
 
 
 def get_closest_bar(bars, longitude, latitude):
-    path = 1000000000
-    closest_bar = {}
-    for bar in bars:
-        bar_coordinates = bar["geometry"]["coordinates"]
-        new_path = sqrt((bar_coordinates[0] - longitude)**2 + (bar_coordinates[1] - latitude)**2)
-        if new_path < path:
-            path = new_path
-            closest_bar = bar
-    return closest_bar
+    return min(bars, key=lambda bar: sqrt(
+            (bar["geometry"]["coordinates"][0] - longitude)**2 +
+            (bar["geometry"]["coordinates"][1] - latitude)**2
+        )
+    )
 
 
 def arguments():
@@ -46,19 +42,19 @@ def arguments():
 
     json_content = load_data(args.path)["features"]
     if args.biggest:
-        print('Biggest bar is {}'.format(
+        print("Biggest bar is {}".format(
             get_biggest_bar(json_content)["properties"]["Attributes"]["Name"])
         )
     if args.smallest:
-        print('Smallest bar is {}'.format(
+        print("Smallest bar is {}".format(
             get_smallest_bar(json_content)["properties"]["Attributes"]["Name"])
         )
     if args.longtitude and args.latitude:
-        print('Closest bar is {}'.format(
+        print("Closest bar is {}".format(
             get_closest_bar(json_content, args.longtitude, args.latitude)["properties"]["Attributes"]["Name"]))
     elif args.longtitude or args.latitude:
-        print('Not enough parameters')
+        print("Not enough parameters")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     arguments()
