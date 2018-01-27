@@ -68,12 +68,7 @@ def parse_argv():
     return parser.parse_args()
 
 
-if __name__ == "__main__":
-    args = parse_argv()
-    if not os.path.isfile(args.path):
-        print("File {} is not exists".format(args.path))
-        sys.exit(1)
-    bars = load_data(args.path)["features"]
+def check_args():
     if args.biggest:
         print("Biggest bar is {}".format(
             get_biggest_bar(bars)["properties"]["Attributes"]["Name"])
@@ -89,7 +84,18 @@ if __name__ == "__main__":
                 args.longtitude,
                 args.latitude
             )["properties"]["Attributes"]["Name"],
-            )
+        )
         )
     elif args.longtitude or args.latitude:
         print("Not enough parameters")
+
+
+if __name__ == "__main__":
+    args = parse_argv()
+    print("ARGS ", args)
+    try:
+        bars = load_data(args.path)["features"]
+    except FileNotFoundError:
+        print("File {} is not exists".format(args.path))
+    else:
+        check_args()
