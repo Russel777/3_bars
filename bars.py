@@ -31,7 +31,7 @@ def get_closest_bar(bars, longitude, latitude):
     )
 
 
-def add_argv():
+def parse_argv():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-p",
@@ -50,24 +50,24 @@ def add_argv():
         action="store_true",
     )
     parser.add_argument(
-                        "-x",
-                        "--longtitude",
-                        help="input longitude and latitude for display a "
-                             "closest bar in file list ",
-                        type=float,
+        "-x",
+        "--longtitude",
+        help="input longitude and latitude for display a "
+             "closest bar in file list ",
+        type=float,
     )
     parser.add_argument(
-                        "-y",
-                        "--latitude",
-                        help="input longitude and latitude for display a "
-                             "closest bar in file list ",
-                        type=float,
+        "-y",
+        "--latitude",
+        help="input longitude and latitude for display a "
+             "closest bar in file list ",
+        type=float,
     )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
-    args = add_argv()
+    args = parse_argv()
     bars = load_data(args.path)["features"]
     if args.biggest:
         print("Biggest bar is {}".format(
@@ -82,7 +82,8 @@ if __name__ == "__main__":
             get_closest_bar(
                 bars,
                 args.longtitude,
-                args.latitude)["properties"]["Attributes"]["Name"],
+                args.latitude
+            )["properties"]["Attributes"]["Name"],
             )
         )
     elif args.longtitude or args.latitude:
