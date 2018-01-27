@@ -68,23 +68,27 @@ def parse_argv():
 
 if __name__ == "__main__":
     args = parse_argv()
-    bars = load_data(args.path)["features"]
-    if args.biggest:
-        print("Biggest bar is {}".format(
-            get_biggest_bar(bars)["properties"]["Attributes"]["Name"])
-        )
-    if args.smallest:
-        print("Smallest bar is {}".format(
-            get_smallest_bar(bars)["properties"]["Attributes"]["Name"])
-        )
-    if args.longtitude and args.latitude:
-        print("Closest bar is {}".format(
-            get_closest_bar(
-                bars,
-                args.longtitude,
-                args.latitude
-            )["properties"]["Attributes"]["Name"],
+    try:
+        bars = load_data(args.path)["features"]
+    except FileNotFoundError:
+        print("File not found, please check a filename and file in directory")
+    else:
+        if args.biggest:
+            print("Biggest bar is {}".format(
+                get_biggest_bar(bars)["properties"]["Attributes"]["Name"])
             )
-        )
-    elif args.longtitude or args.latitude:
-        print("Not enough parameters")
+        if args.smallest:
+            print("Smallest bar is {}".format(
+                get_smallest_bar(bars)["properties"]["Attributes"]["Name"])
+            )
+        if args.longtitude and args.latitude:
+            print("Closest bar is {}".format(
+                get_closest_bar(
+                    bars,
+                    args.longtitude,
+                    args.latitude
+                )["properties"]["Attributes"]["Name"],
+                )
+            )
+        elif args.longtitude or args.latitude:
+            print("Not enough parameters")
